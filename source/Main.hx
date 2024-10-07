@@ -41,8 +41,8 @@ import haxe.io.Path;
 class Main extends Sprite
 {
 	var game = {
-		width: 1280, // WINDOW width
-		height: 720, // WINDOW height
+		width: 960, // WINDOW width
+		height: 672, // WINDOW height
 		initialState: TitleState, // initial game state
 		zoom: -1.0, // game state bounds
 		framerate: 60, // default framerate
