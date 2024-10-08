@@ -2,6 +2,7 @@ package backend;
 
 #if android
 import android.Tools;
+import android.Permissions;
 #end
 import lime.system.System as LimeSystem;
 import haxe.io.Path;
