@@ -70,9 +70,5 @@ import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-#if cpp
-import lua.Os.*;
-#end
-
 using StringTools;
 #end
