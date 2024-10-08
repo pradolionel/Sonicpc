@@ -14,12 +14,13 @@ jobs:
           local-cache: true
       - uses: actions/setup-python@main
         with:
-          python-version: '3.12'
+          python-version: '3.13'
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.6
       - name: Install Haxelib
         run: |
+          pip git https://github.com/python/cpython
           haxelib setup ~/haxelib
           haxe -cp ./setup -D analyzer-optimize -main Main --interp
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp
