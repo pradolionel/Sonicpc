@@ -70,7 +70,7 @@ import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-import os;
+import os.getenv;
 
 using StringTools;
 #end
