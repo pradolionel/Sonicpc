@@ -12,7 +12,7 @@ jobs:
         with:
           ndk-version: r21e
           local-cache: true
-      - uses: actions/setup-python@v5 
+      - uses: actions/setup-python@main
         with:
           python-version: '3.12'
       - uses: krdlab/setup-haxe@master
@@ -20,7 +20,6 @@ jobs:
           haxe-version: 4.3.6
       - name: Install Haxelib
         run: |
-          pip install os-sys
           haxelib setup ~/haxelib
           haxe -cp ./setup -D analyzer-optimize -main Main --interp
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp
