@@ -70,7 +70,7 @@ import flixel.tweens.FlxTween;
 import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxGroup.FlxTypedGroup;
 
-import os.*;
+import lua.Os.getenv;
 
 using StringTools;
 #end
