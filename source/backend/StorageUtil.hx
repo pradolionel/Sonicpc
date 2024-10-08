@@ -113,39 +113,14 @@ class StorageUtil
 
 		if (Permissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE') || Permissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
 		{
-			if (!FileSystem.exists(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
-				FileSystem.createDirectory(Tools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
-
-			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
-			{
-				showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
-				LimeSystem.exit(0);
-			}
-			else
-			{
-				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
-				{
-					showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
-					LimeSystem.exit(0);
-				}
-
-				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
-				{
-					showPopUp('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
-					LimeSystem.exit(0);
-				}
-			}
+			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
+				createDirectories(StorageUtil.getStorageDirectory());
 		}
-		#end
-	}
-
-	public static function checkExternalPaths(?splitStorage = false):Array<String>
-	{
-		var process = new Process('grep -o "/storage/....-...." /proc/mounts | paste -sd \',\'');
-		var paths:String = process.stdout.readAll().toString();
-		if (splitStorage)
-			paths = paths.replace('/storage/', '');
-		return paths.split(',');
+		catch (e:Dynamic)
+		{
+			showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			LimeSystem.exit(1);
+		}
 	}
 
 	public static function getExternalDirectory(externalDir:String):String
