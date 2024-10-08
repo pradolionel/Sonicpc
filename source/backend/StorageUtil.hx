@@ -121,6 +121,7 @@ class StorageUtil
 			showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
 			LimeSystem.exit(1);
 		}
+		#end
 	}
 
 	public static function getExternalDirectory(externalDir:String):String
