@@ -100,34 +100,36 @@ class StorageUtil
 	#if android
 	public static function requestPermissions():Void
 	{
-		if (AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU)
-			AndroidPermissions.requestPermissions(['READ_MEDIA_IMAGES', 'READ_MEDIA_VIDEO', 'READ_MEDIA_AUDIO']);
-		else
-			AndroidPermissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
-
-		if (!AndroidEnvironment.isExternalStorageManager())
+		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
-			if (AndroidVersion.SDK_INT >= AndroidVersionCode.S)
-				AndroidSettings.requestSetting('REQUEST_MANAGE_MEDIA');
-			AndroidSettings.requestSetting('MANAGE_APP_ALL_FILES_ACCESS_PERMISSION');
+			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
+			showPopUp('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
 		}
 
-		if ((AndroidVersion.SDK_INT >= AndroidVersionCode.TIRAMISU
-			&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_MEDIA_IMAGES'))
-			|| (AndroidVersion.SDK_INT < AndroidVersionCode.TIRAMISU
-				&& !AndroidPermissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE')))
-			showPopUp('If you accepted the permissions you are all good!' + '\nIf you didn\'t then expect a crash' + '\nPress OK to see what happens',
-				'Notice!');
+		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
+		{
+			if (!FileSystem.exists(AndroidTools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file')))
+				FileSystem.createDirectory(AndroidTools.getExternalStorageDirectory() + '/' + '.' + Application.current.meta.get('file'));
 
-		try
-		{
-			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
-				createDirectories(StorageUtil.getStorageDirectory());
-		}
-		catch (e:Dynamic)
-		{
-			showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
-			LimeSystem.exit(1);
+			if (!FileSystem.exists(StorageUtil.getPath() + 'assets') && !FileSystem.exists(StorageUtil.getPath() + 'mods'))
+			{
+				showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			        LimeSystem.exit(1);
+			}
+			else
+			{
+				if (!FileSystem.exists(StorageUtil.getPath() + 'assets'))
+				{
+					showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			                LimeSystem.exit(1);
+				}
+
+				if (!FileSystem.exists(StorageUtil.getPath() + 'mods'))
+				{
+					showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
+			                LimeSystem.exit(1);
+				}
+			}
 		}
 	}
 
