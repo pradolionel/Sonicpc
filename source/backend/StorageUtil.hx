@@ -104,7 +104,6 @@ class StorageUtil
 	#if android
 	public static function requestPermissions():Void
 	{
-		#if mobile
 		if (!Permissions.getGrantedPermissions().contains('android.permission.READ_EXTERNAL_STORAGE') || !Permissions.getGrantedPermissions().contains('android.permission.WRITE_EXTERNAL_STORAGE'))
 		{
 			Permissions.requestPermissions(['READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE']);
@@ -121,7 +120,15 @@ class StorageUtil
 			showPopUp('Please create directory to\n' + StorageUtil.getStorageDirectory(true) + '\nPress OK to close the game', 'Error!');
 			LimeSystem.exit(1);
 		}
-		#end
+	}
+
+	public static function checkExternalPaths(?splitStorage = false):Array<String>
+	{
+		var process = new Process('grep -o "/storage/....-...." /proc/mounts | paste -sd \',\'');
+		var paths:String = process.stdout.readAll().toString();
+		if (splitStorage)
+			paths = paths.replace('/storage/', '');
+		return paths.split(',');
 	}
 
 	public static function getExternalDirectory(externalDir:String):String
