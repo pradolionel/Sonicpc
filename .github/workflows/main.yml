@@ -12,6 +12,9 @@ jobs:
         with:
           ndk-version: r21e
           local-cache: true
+      - uses: actions/setup-python@main
+        with:
+          python-version: '3.12'
       - uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.6
