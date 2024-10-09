@@ -20,7 +20,8 @@ jobs:
       - name: haxe lib
         run: |
           haxelib setup ~/haxelib
-          haxe -cp ./setup -D analyzer-optimize -main Main --interp
+          haxelib install hmm
+          haxelib run hmm install
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp
           haxelib run lime rebuild hxcpp
       - name: mobile
