@@ -1,40 +1,40 @@
-name: Build
+name: build
 on:
   push:
 jobs:
-  buildAndrois:
+  main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
+      - name: checkout
+        uses: actions/checkout@main
       - name: setup ndk
         uses: nttld/setup-ndk@main
         id: setup-ndk
         with:
           ndk-version: r21e
           local-cache: true
-      - uses: krdlab/setup-haxe@master
+      - name: setup haxe
+        uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.6
-      - name: Install Haxelib
+      - name: haxe lib
         run: |
           haxelib setup ~/haxelib
           haxe -cp ./setup -D analyzer-optimize -main Main --interp
           haxelib git hxcpp https://github.com/haxefoundation/hxcpp
           haxelib run lime rebuild hxcpp
-      - name: compile mobile
+      - name: mobile
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
-          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_LATEST_HOME
-          haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_HOME
+          haxelib run lime config JAVA_HOME $JAVA_HOME_11_X64
           haxelib run lime config ANDROID_SETUP true
         env:
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-      - name: Create Version Tag
-        run: echo "${{github.run_id}}" > VERSION
-      - name: Compile
-        run: haxelib run lime build android --app-version="4.0.0-${{ github.run_id}}"
-      - name: Publish Artifact
+      - name: compile
+        run: haxelib run lime build android
+      - name: push
         uses: actions/upload-artifact@main
         with:
-          name: linuxBuild
-          path: 'export/release/android/bin/app/build/outputs/apk/debug'
+          name: fnf
+          path: export/release/android/bin/app/build/outputs/apk/debug
