@@ -157,10 +157,7 @@
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	<haxeflag name="--macro" value="include('my.pack')" />
 
-	<section if="android">
-                <android target-sdk-version="34" if="${lime &lt; 8.0.0}" />
-		</config>
-	</section>
+        <android target-sdk-version="34" if="${lime &lt; 8.0.0}" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 
