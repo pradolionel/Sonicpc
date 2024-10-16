@@ -3,7 +3,7 @@
     {
       "name": "lime",
       "type": "haxelib",
-      "version": "7.9.0"
+      "version": null
     },
     {
       "name": "openfl",
@@ -50,7 +50,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/pradolionel/extension-androidtools"
+      "url": "https://github.com/MAJigsaw77/extension-androidtools"
     },
     {
       "name": "SScript",
@@ -64,7 +64,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/MAJigsaw77/hxdiscord_rpc"
+      "url": "https://github.com/MAJigsaw77 /hxdiscord_rpc"
     },
     {
       "name": "flxanimate",
